@@ -20,3 +20,6 @@ class UserController {
     response.status(201).json({ 'id': usr._id, 'email': usr.email });
   }
 }
+
+const userController = new UserController();
+export default userController;
