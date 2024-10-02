@@ -13,13 +13,16 @@ class UserController {
       response.status(400).json({ error: 'Missing password' });
     }
     const user = dbClient.findUser({ email });
-    if (user) {
-      response.status(400).json({ error: 'Already exist' });
-    }
-    const hashpsw = sha1(password);
-    dbClient.createUser(email, hashpsw);
-    const usr = dbClient.findUser(email);
-    response.status(201).json({ id: usr._id, email: usr.email });
+    user.then((usr) => {
+      if (usr) {
+        response.status(400).json({ error: 'Already exist' });
+      }
+    }).catch(() => {
+      const hashpsw = sha1(password);
+      dbClient.createUser(email, hashpsw);
+      const usr = dbClient.findUser(email);
+      response.status(201).json({ id: usr._id, email: usr.email });
+    });
   }
 
   getMe(req, res) {
