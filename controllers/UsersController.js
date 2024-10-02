@@ -37,11 +37,13 @@ class UserController {
       return res.status(401).send({ error: 'Unauthorized' });
     }
     const userId = redisClient.get(`auth_${token}`);
-    const user = dbClient.findUser({ _id: userId });
-    if (!user) {
-      return res.status(401).send({ error: 'Unauthorized' });
-    }
-    return res.status(200).send({ id: user._id, email: user.email });
+    userId.then((user) => {
+      const user = dbClient.findUser({ _id: userId });
+      if (!user) {
+        return res.status(401).send({ error: 'Unauthorized' });
+      }
+      return res.status(200).send({ id: user._id, email: user.email });
+    }).catch(() => res.status(401).send({ error: 'Unauthorized' }));
   }
 }
 
