@@ -37,9 +37,9 @@ class UserController {
       return res.status(401).send({ error: 'Unauthorized' });
     }
     const userId = redisClient.get(`auth_${token}`);
-    userId.then((user) => {
+    userId.then((usr) => {
       const user = dbClient.findUser({ _id: userId });
-      if (!user) {
+      if (!usr) {
         return res.status(401).send({ error: 'Unauthorized' });
       }
       return res.status(200).send({ id: user._id, email: user.email });
