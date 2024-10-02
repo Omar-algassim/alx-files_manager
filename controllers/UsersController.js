@@ -5,8 +5,7 @@ import dbClient from '../utils/db';
 
 class UserController {
   postNew(request, response) {
-    const email = request.body.email || null;
-    const password = request.body.password || null;
+    const [email, password] = request.body;
     if (!email) {
       response.status(400).send({ error: 'Missing email' });
     } else if (!password) {
