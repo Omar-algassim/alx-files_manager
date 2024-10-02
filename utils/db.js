@@ -33,6 +33,7 @@ class DBClient {
   async createUser(email, password) {
     this.client.db(this.database).collection('users').insertOne({ email, password });
     return { email, password };
+  }
 }
 
 const dbClient = new DBClient();
