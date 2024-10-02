@@ -1,4 +1,5 @@
 #!/usr/bin/node
+/* eslint-disable class-methods-use-this */
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
 
@@ -10,7 +11,7 @@ class AppController {
   }
 
   async getStats(request, response) {
-    const stats = { "users": await dbClient.nbUsers(), "files": await dbClient.nbFiles() };
+    const stats = { users: await dbClient.nbUsers(), files: await dbClient.nbFiles() };
     response.status(200).json(stats);
   }
 }

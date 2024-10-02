@@ -2,6 +2,7 @@
 /* eslint-disable class-methods-use-this */
 import sha1 from 'sha1';
 import dbClient from '../utils/db';
+import redisClient from '../utils/redis';
 
 class UserController {
   postNew(request, response) {
@@ -26,7 +27,8 @@ class UserController {
     if (!token) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
-    const user = dbClient.f(token);
+    const userId = redisClient.get(`auth_${token}`);
+    const user = dbClient.findUser(userId);
     if (!user) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
