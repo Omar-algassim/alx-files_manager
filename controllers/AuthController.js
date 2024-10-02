@@ -6,7 +6,7 @@ import redisClient from '../utils/redis';
 import dbClient from '../utils/db';
 
 class AuthControllrt {
-  getConnect(res, req) {
+  getConnect(req, res) {
     const auth = req.header('Authorization');
     if (!auth) {
       return res.status(401).send({ error: 'Unauthorized' });
