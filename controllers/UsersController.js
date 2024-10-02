@@ -6,7 +6,9 @@ import redisClient from '../utils/redis';
 
 class UserController {
   postNew(request, response) {
-    const [email, password] = request.body;
+    const data = request.body;
+    const { email, password } = data;
+    console.log(data);
     if (!email) {
       response.status(400).send({ error: 'Missing email' });
     } else if (!password) {
