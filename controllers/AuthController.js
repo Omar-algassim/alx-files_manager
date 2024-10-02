@@ -4,7 +4,7 @@
 import { v4 as uuid4 } from 'uuid';
 import redisClient from '../utils/redis';
 import dbClient from '../utils/db';
-
+import sha1 from 'sha1'
 class AuthControllrt {
   getConnect(req, res) {
     const auth = req.header('Authorization');
@@ -14,7 +14,7 @@ class AuthControllrt {
     const code = auth.toString().split(' ')[1];
     const decode = Buffer.from(code, 'base64').toString('utf-8');
     const [email, password] = decode.split(':');
-    dbClient.findUser({ email, password }).then((user) => {
+    dbClient.findUser({ email, password: sha1(password) }).then((user) => {
       if (!user) {
         return res.status(401).send({ error: 'Unauthorized' });
       }
