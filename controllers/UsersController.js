@@ -12,7 +12,7 @@ class UserController {
     } else if (!password) {
       response.status(400).json({ error: 'Missing password' });
     }
-    const user = dbClient.findUser(email);
+    const user = dbClient.findUser({ email });
     if (user) {
       response.status(400).json({ error: 'Already exist' });
     }
