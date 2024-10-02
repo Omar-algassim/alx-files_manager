@@ -17,11 +17,16 @@ class UserController {
       if (usr) {
         response.status(400).json({ error: 'Already exist', email: usr.email });
       }
-    }).catch(() => {
-      const hashpsw = sha1(password);
-      dbClient.createUser(email, hashpsw);
-      const usr = dbClient.findUser({ email });
+    }).catch((err) => {
+      console.log(err);
+    });
+    const hashpsw = sha1(password);
+    dbClient.createUser(email, hashpsw);
+    const newuser = dbClient.findUser({ email });
+    newuser.then((usr) => {
       response.status(201).json({ id: usr._id, email: usr.email });
+    }).catch((err) => {
+      console.log(err);
     });
   }
 
