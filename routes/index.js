@@ -1,7 +1,7 @@
 #!/usr/bin/node
 import appController from '../controllers/AppController';
 import userController from '../controllers/UsersController';
-import authController from '../controllers/AuthControllrt';
+import authController from '../controllers/AuthController';
 
 const route = (app) => {
   app.get('/status', appController.getStatus);
