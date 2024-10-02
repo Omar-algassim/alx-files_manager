@@ -11,7 +11,7 @@ class AuthControllrt {
     if (!auth) {
       return res.status(401).send({ error: 'Unauthorized' });
     }
-    const code = auth.split(' ')[1];
+    const code = auth.toString().split(' ')[1];
     const decode = Buffer.from(code, 'base64').toString('utf-8');
     const [email, password] = decode.split(':');
     dbClient.findUser({ email, password }).then((user) => {
