@@ -7,9 +7,9 @@ import redisClient from '../utils/redis';
 class UserController {
   postNew(request, response) {
     const data = request.body;
-    const { email, password } = data;
     console.log(data);
-    if (!email) {
+    response.status(201).json({ email: data.email });
+   /* if (!email) {
       response.status(400).send({ error: 'Missing email' });
     } else if (!password) {
       response.status(400).json({ error: 'Missing password' });
@@ -21,7 +21,7 @@ class UserController {
     const hashpsw = sha1(password);
     dbClient.createUser(email, hashpsw);
     const usr = dbClient.findUser(email);
-    response.status(201).json({ id: usr._id, email: usr.email });
+    response.status(201).json({ id: usr._id, email: usr.email });*/
   }
 
   getMe(req, res) {
