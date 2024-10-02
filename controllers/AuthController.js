@@ -1,4 +1,5 @@
 #!/usr/bin/node
+/* eslint-disable consistent-return */
 /* eslint-disable class-methods-use-this */
 import { v4 as uuid4 } from 'uuid';
 import redisClient from '../utils/redis';
