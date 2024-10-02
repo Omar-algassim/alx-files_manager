@@ -1,23 +1,37 @@
 #!/usr/bin/node
-import dbClient from "../utils/db";
+/* eslint-disable class-methods-use-this */
 import sha1 from 'sha1';
+import dbClient from '../utils/db';
+
 class UserController {
   postNew(request, response) {
-    const email = request.body.email;
-    const password = request.body.password;
+    const email = request.body.email || null;
+    const password = request.body.password || null;
     if (!email) {
-      response.status(400).send({ 'error': 'Missing email' });
+      response.status(400).send({ error: 'Missing email' });
     } else if (!password) {
-        response.status(400).json({ 'error': 'Missing password' });
+      response.status(400).json({ error: 'Missing password' });
     }
     const user = dbClient.findUser(email);
     if (user) {
-        response.status(400).json({'error': 'Already exist'});
+      response.status(400).json({ error: 'Already exist' });
     }
-    const hashpsw = sha1(password)
+    const hashpsw = sha1(password);
     dbClient.createUser(email, hashpsw);
     const usr = dbClient.findUser(email);
-    response.status(201).json({ 'id': usr._id, 'email': usr.email });
+    response.status(201).json({ id: usr._id, email: usr.email });
+  }
+
+  usersMe(req, res) {
+    const token = req.header('X-Token');
+    if (!token) {
+      return res.status(401).send({ error: 'Unauthorized' });
+    }
+    const user = dbClient.f(token);
+    if (!user) {
+      return res.status(401).send({ error: 'Unauthorized' });
+    }
+    return res.status(200).send({ id: user._id, email: user.email });
   }
 }
 
