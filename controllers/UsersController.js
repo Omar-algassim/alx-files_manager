@@ -15,7 +15,7 @@ class UserController {
     const user = dbClient.findUser({ email });
     user.then((usr) => {
       if (usr) {
-        response.status(400).json({ error: 'Already exist', email: usr.email });
+        response.status(400).json({ error: 'Already exist' });
       }
     }).catch((err) => {
       console.log(err);
