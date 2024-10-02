@@ -24,7 +24,7 @@ class UserController {
     response.status(201).json({ id: usr._id, email: usr.email });
   }
 
-  usersMe(req, res) {
+  getMe(req, res) {
     const token = req.header('X-Token');
     if (!token) {
       return res.status(401).send({ error: 'Unauthorized' });

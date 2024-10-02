@@ -9,7 +9,7 @@ const route = (app) => {
   app.post('/users', userController.postNew);
   app.get('/connect', authController.getConnect);
   app.get('/disconnect', authController.getDisconnect);
-  app.get('/users/me', authController.getMe);
+  app.get('/users/me', userController.getMe);
 };
 
 export default route;
